@@ -167,12 +167,12 @@ setup("authenticate as user with translation permissions", async ({ page }) => {
     translationPermissionsFile,
   );
 });
-setup("authenticate as user with product permissions", async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  await loginPage.loginAndSetStorageState(
-    USER_PERMISSION.product,
-    process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
-    page,
-    productPermissionsFile,
-  );
-});
+// setup("authenticate as user with product permissions", async ({ page }) => {
+//   const loginPage = new LoginPage(page);
+//   await loginPage.loginAndSetStorageState(
+//     USER_PERMISSION.product,
+//     process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
+//     page,
+//     productPermissionsFile,
+//   );
+// });
