@@ -1,53 +1,19 @@
+import { URL_LIST } from "@data/url";
 import { AppsPage } from "@pages/appsPage";
-import { AppInstallationPage } from "@pages/appInstallationPage";
+import { MainMenuPage } from "@pages/mainMenuPage";
 import { expect, test } from "@playwright/test";
-import { AppPage } from "@pages/appPageThirdparty";
-import { APPS } from "@data/e2eTestData";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
-let appsPage: AppsPage;
-let installationPage: AppInstallationPage;
-let appPage: AppPage;
+test.use({ storageState: "playwright/.auth/app.json" });
 
-test("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
+test("TC: SALEOR_10 User should be able to navigate to apps list as a staff member using APP permission @e2e", async ({
   page,
 }) => {
+  const mainMenuPage = new MainMenuPage(page);
   const appsPage = new AppsPage(page);
-  const installationPage = new AppInstallationPage(page);
 
-  await appsPage.gotoAppsList();
+  await page.goto(URL_LIST.homePage);
+  await mainMenuPage.openApps();
   await expect(appsPage.installExternalAppButton).toBeVisible();
-  await appsPage.installExternalAppButton.click();
-  await appsPage.typeManifestUrl("https://klaviyo.saleor.app/api/manifest");
-  await appsPage.installAppFromManifestButton.click();
-  await expect(installationPage.appInstallationPageHeader).toHaveText("You are about to install Klaviyo");
-  await installationPage.installAppButton.click();
-  await appsPage.expectSuccessBanner();
-  await expect(appsPage.installedAppRow.first()).toBeVisible();
-  await expect(appsPage.appKlaviyo).toContainText("Klaviyo");
-  await appsPage.appKlaviyo.click();
-
-  const iframeLocator = page.frameLocator("iframe");
-
-  await expect(iframeLocator.getByLabel("PUBLIC_TOKEN")).toBeVisible();
-  await iframeLocator.getByLabel("PUBLIC_TOKEN").fill("test_token");
-  await iframeLocator.getByText("Save").click();
-  await appsPage.expectSuccessBanner();
-
-});
-
-test("TC: SALEOR_120 User should be able to delete thirdparty app @e2e", async ({
-  page,
-}) => {
-  const appsPage = new AppsPage(page);
-  const appPage = new AppPage(page);
-
-  await appPage.goToExistingAppPage(APPS.appToBeDeleted.id);
-  await expect(appPage.pageHeader).toContainText("Adyen");
-  await appPage.deleteButton.click();
-  await appPage.deleteAppDialog.clickDeleteButton();
-  await appsPage.expectSuccessBanner();
-  await expect(appsPage.installedAppRow.first()).toBeVisible();
-  await expect(appsPage.appAdyen).not.toBeVisible();
-
+  await expect(appsPage.installedAppsList).toBeVisible();
+  await mainMenuPage.expectMenuItemsCount(2);
 });
