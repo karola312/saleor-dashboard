@@ -10,24 +10,6 @@ on:
         type: string
         required: true
         description: Version of run eg. "3.19.4-5a41d18"
-
-    secrets:
-      STAGING_TOKEN:
-        required: true
-      TESTMO_URL:
-        required: true
-      TESTMO_TOKEN:
-        required: true
-      E2E_USER_NAME:
-        required: true
-      E2E_USER_PASSWORD:
-        required: true
-      E2E_PERMISSIONS_USERS_PASSWORD:
-        required: true
-      MAILPITURL:
-        required: true
-      SLACK_QA_STATUSES_WEBHOOK_URL:
-        required: true
         
 jobs:
   add-check-and-prepare-instance:
