@@ -4,9 +4,6 @@ inputs:
   MODE:
     description: "The mode of running tests (pull-request, release, main)"
     required: true
-  CLI_TOKEN:
-    description: "Saleor cli token"
-    required: true
   VERSION:
     description: "Version in format X.XX, if run from other branch"
     required: false
