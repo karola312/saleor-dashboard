@@ -15,7 +15,10 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import { AppsSectionRoot } from "./apps";
+const AppsSectionRoot = React.lazy(() =>
+  import("./apps").then(module => ({ default: module.AppsSectionRoot })),
+);
+
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
 import { AppSections } from "./apps/urls";
 import AttributeSection from "./attributes";
@@ -25,10 +28,14 @@ import AuthProvider from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
 import { useAuthRedirection } from "./auth/hooks/useAuthRedirection";
-import CategorySection from "./categories";
-import ChannelsSection from "./channels";
+
+const CategorySection = React.lazy(() => import("./categories"));
+const ChannelsSection = React.lazy(() => import("./channels"));
+
 import { channelsSection } from "./channels/urls";
-import CollectionSection from "./collections";
+
+const CollectionSection = React.lazy(() => import("./collections"));
+
 import AppLayout from "./components/AppLayout";
 import useAppChannel, { AppChannelProvider } from "./components/AppLayout/AppChannelContext";
 import { DateProvider } from "./components/Date";
@@ -42,39 +49,59 @@ import { ProductAnalytics } from "./components/ProductAnalytics";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
 import { DEMO_MODE, getAppMountUri, GTM_ID } from "./config";
-import ConfigurationSection from "./configuration";
+
+const ConfigurationSection = React.lazy(() => import("./configuration"));
+
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
-import CustomAppsSection from "./custom-apps";
+
+const CustomAppsSection = React.lazy(() => import("./custom-apps"));
+
 import { CustomAppSections } from "./custom-apps/urls";
-import { CustomerSection } from "./customers";
-import DiscountSection from "./discounts";
+
+const CustomerSection = React.lazy(() =>
+  import("./customers").then(module => ({ default: module.CustomerSection })),
+);
+const DiscountSection = React.lazy(() => import("./discounts"));
+
 import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvider";
-import GiftCardSection from "./giftCards";
+
+const GiftCardSection = React.lazy(() => import("./giftCards"));
+
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
-import HomePage from "./home";
+
+const HomePage = React.lazy(() => import("./home"));
+
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
-import NavigationSection from "./navigation";
+
+const NavigationSection = React.lazy(() => import("./navigation"));
+
 import { navigationSection } from "./navigation/urls";
 import { NotFound } from "./NotFound";
-import OrdersSection from "./orders";
-import PageSection from "./pages";
-import PageTypesSection from "./pageTypes";
-import PermissionGroupSection from "./permissionGroups";
-import PluginsSection from "./plugins";
-import ProductSection from "./products";
-import ProductTypesSection from "./productTypes";
+
+const OrdersSection = React.lazy(() => import("./orders"));
+const PageSection = React.lazy(() => import("./pages"));
+const PageTypesSection = React.lazy(() => import("./pageTypes"));
+const PermissionGroupSection = React.lazy(() => import("./permissionGroups"));
+const PluginsSection = React.lazy(() => import("./plugins"));
+const ProductSection = React.lazy(() => import("./products"));
+const ProductTypesSection = React.lazy(() => import("./productTypes"));
+
 import errorTracker from "./services/errorTracking";
-import ShippingSection from "./shipping";
-import SiteSettingsSection from "./siteSettings";
-import StaffSection from "./staff";
-import TaxesSection from "./taxes";
+
+const ShippingSection = React.lazy(() => import("./shipping"));
+const SiteSettingsSection = React.lazy(() => import("./siteSettings"));
+const StaffSection = React.lazy(() => import("./staff"));
+const TaxesSection = React.lazy(() => import("./taxes"));
+
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
-import TranslationsSection from "./translations";
-import WarehouseSection from "./warehouses";
+
+const TranslationsSection = React.lazy(() => import("./translations"));
+const WarehouseSection = React.lazy(() => import("./warehouses"));
+
 import { warehouseSection } from "./warehouses/urls";
 
 if (GTM_ID) {

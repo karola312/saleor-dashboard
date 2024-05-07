@@ -193,6 +193,10 @@ export default defineConfig(({ command, mode }) => {
             if (id.includes("node_modules")) {
               return "vendor";
             }
+
+            if (id.includes('react-router-dom') || id.includes('react-router')) {
+              return '@react-router';
+            }
           },
         },
       },

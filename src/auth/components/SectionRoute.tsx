@@ -1,5 +1,5 @@
 import { PermissionEnum } from "@dashboard/graphql";
-import React from "react";
+import React, { Suspense } from "react";
 import { Route, RouteProps } from "react-router-dom";
 
 import NotFound from "../../NotFound";
@@ -39,7 +39,13 @@ export const SectionRoute: React.FC<SectionRouteProps> = ({
     return hasAnyPermissions(permissions, user!);
   };
 
-  return hasSectionPermissions() ? <Route {...props} /> : <NotFound />;
+  return hasSectionPermissions() ? (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Route {...props} />
+    </Suspense>
+  ) : (
+    <NotFound />
+  );
 };
 SectionRoute.displayName = "Route";
 export default SectionRoute;
